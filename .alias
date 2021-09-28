@@ -1,0 +1,12 @@
+# Linux
+#alias pdf='/mnt/c/Program\ Files/SumatraPDF/SumatraPDF.exe'
+
+alias hardlink="source $STORE/.bin/.hardlink.sh"
+alias commit="source $STORE/.bin/.commit.sh"
+alias tex2svg="source $STORE/.bin/.tex2svg.sh"
+alias sl="ls -la"
+alias ls="ls -la"
+alias LS="ls -la"
+
+# Make Check
+export ALIAS_CHECK=1
