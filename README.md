@@ -53,15 +53,15 @@ Preferably a separate hard-drive.
       # Get UUID, not PARTUUID, from above
 
       # Make Mount point
-      sudo mkdir /media/tristin/DATA
+      sudo mkdir /media/username/drivename
 
-    - Use `atom /etc/fstab` to add `UUID=F8E2C122E2C0E64A /media/tristin/DATA    auto nosuid,nodev,nofail,x-gvfs-show 0 0`
-    -Test if you did it right `sudo mount -a`
+    - Use `atom /etc/fstab` to add `UUID=MY-UUID-HERE /media/username/drivename auto nosuid,nodev,nofail,x-gvfs-show 0 0`
+    - Test if you did it right `sudo mount -a` - ???
     - You may have to restart here. Unclear it just started working.
 
 - Clean up bash
-  - `/etc/login.defs` remove `:/usr/local/games:/usr/games`
-  - `/etc/environment` remove `:/usr/games:/usr/local/games:/snap/bin`
+  - open file `/etc/login.defs`  remove `:/usr/local/games:/usr/games`
+  - open file `/etc/environment` remove `:/usr/games:/usr/local/games:/snap/bin`
   - `sudo rm -rf /usr/local/games/`
 
 - Restart Computer for all these to be implemented.
@@ -80,7 +80,7 @@ Assuming you have your bash environment set up correctly, I roughly follow [thes
 
 Re-Strart your Computer.
 
-       # Compile and Install Python, this will take a while. Use your version.
+       # Compile and Install Python, this may take a while. Use your version.
        pyenv install #3.9.7
 
 Note: Use `pyenv virtualenv <python_version> <environment_name>` to create new environments.
@@ -91,17 +91,18 @@ Note: Use `pyenv virtualenv <python_version> <environment_name>` to create new e
   - `git config --global user.email "you@email.com"`
   - `git config --global user.name "UserName"`
 
-- Make repos directory `mkdir $STORE/repos`
-- Symlink `ln -s $STORE/repos ~/repos`
-- Go to repos directory `cd $STORE/repos`
+- Make and Link Repos Directory
+
+      if [ ! -d $STORE/repos ]; then mkdir $STORE/repos; fi
+      ln -s $STORE/repos ~/repos
+
 - Downloading a Repository
-  - Use `git clone URL` with URL as:
-    - `https://Username`:`Password`@`github.com/myRepoDir/myRepo.git`
-    - `https://Username`:`Personal_Access_Token`@`github.com/myRepoDir/myRepo.git`
+  - Use `git clone URL ~/repos` with URL as:
+    - `https://Username`:`Password`@`github.com/Username/myRepo.git`
+    - `https://Username`:`Personal_Access_Token`@`github.com/Username/myRepo.git`
 
 - Creating a Respository
   - Create a Github Repo [link](https://docs.github.com/en/get-started/quickstart/create-a-repo)
-
 
 ## Install Common Tools
 
