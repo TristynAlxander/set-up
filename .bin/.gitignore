@@ -1,5 +1,7 @@
+.gitignore 
 logs/
 **.log
 temp.py
 **.pdb
 .python-version
+config.ini

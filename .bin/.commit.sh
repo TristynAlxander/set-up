@@ -1,3 +1,4 @@
+#!/bin/bash
 # Temporary Protein-Related Files
 find . -name "*.pdb1"      -type f -delete
 find . -name "*.cif"       -type f -delete
@@ -16,7 +17,7 @@ find . -name "*.temp.*"    -type f -delete
 find . -name "*.temp"      -type f -delete
 find . -name "*_temp"      -type f -delete
 # Create .gitignore
-cp $STORE/.bin/.gitignore .gitignore
+cp $PREF_BIN/.gitignore .gitignore
 # Git
 git add -A
 git commit -m "$(date +%Y_%m_%d_%H_%M_%S)"
