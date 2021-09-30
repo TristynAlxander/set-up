@@ -110,6 +110,7 @@ Note: Use `pyenv virtualenv <python_version> <environment_name>` to create new e
     sudo apt install git-all
     sudo apt install hardlink
     sudo apt install atom
+    
 
 ## Set-Up Common Tools
 
@@ -118,6 +119,7 @@ Note: Use `pyenv virtualenv <python_version> <environment_name>` to create new e
   - set default tab size in `language-python` (and global)
   - disable `bracket-matcher`
   - `apm install duplicate-line-or-selection`
+  - `apm install highlight-selected`
   - Check if `markdown-preview` is already installed. if not `apm install markdown-preview`
   - append duplicate key to `~/.atom/keymap.cson`
 
