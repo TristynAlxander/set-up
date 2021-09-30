@@ -117,7 +117,7 @@ Note: Use `pyenv virtualenv <python_version> <environment_name>` to create new e
 - Atom Text Editor
   - Disable snippets in `language-python`
   - set default tab size in `language-python` (and global)
-  - disable `bracket-matcher`
+  - disable `bracket-matcher` and `whitespace`
   - `apm install duplicate-line-or-selection`
   - `apm install highlight-selected`
   - Check if `markdown-preview` is already installed. if not `apm install markdown-preview`
