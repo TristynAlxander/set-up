@@ -97,7 +97,7 @@ Note: Use `pyenv virtualenv <python_version> <environment_name>` to create new e
       ln -s $STORE/repos ~/repos
 
 - Downloading a Repository
-  - Use `git clone URL ~/repos` with URL as:
+  - Use in `$STORE/repos` use `git clone URL` with URL as:
     - `https://Username`:`Password`@`github.com/Username/myRepo.git`
     - `https://Username`:`Personal_Access_Token`@`github.com/Username/myRepo.git`
 
@@ -117,22 +117,128 @@ Note: Use `pyenv virtualenv <python_version> <environment_name>` to create new e
 - Atom Text Editor
   - Disable snippets in `language-python`
   - set default tab size in `language-python` (and global)
-  - disable `bracket-matcher` and `whitespace`
+  - disable `whitespace`
+  - `bracket-matcher` > uncheck Autocomplete Brackets
   - `apm install duplicate-line-or-selection`
   - `apm install highlight-selected`
   - Check if `markdown-preview` is already installed. if not `apm install markdown-preview`
   - append duplicate key to `~/.atom/keymap.cson`
-
+  
         'atom-workspace atom-text-editor:not([mini])':
           'ctrl-d': 'duplicate-line-or-selection:duplicate'
+          
+  - bigger scrollbar append following to Edit > Stylesheet... > 
+  
+        .scrollbars-visible-always {
+          ::-webkit-scrollbar {
+            width: 12px;
+            height: 12px;
+            &-track {
+                border: 0px;
+                border-radius: 0px;
+                background-color: #444 !important;
+                }
+            &-thumb {
+                background-color: rgba(200,200,250,0.35) !important;
+                border: 0px;
+                border-radius: 9px;
+                }
+            }
+          }
 
 - Fix Firefox
   - Set default Browser to Google.
   - Note: FTP links can be open in the file manager, then the htmls in those directories can be open in firefox. I don't know why.
-
+  - `about:config` > `widget.non-native-theme.scrollbar.size` > 24
+  - `about:config` > `widget.non-native-theme.gtk.scrollbar.allow-buttons` > True
 
 ## Install Semi-Common Tools
 
     sudo apt install inkscape
     sudo apt install texlive-full
     sudo apt install pdf2svg
+
+### Semi-Common Preferences
+  
+  inkscape > Edit > Preferences > Behaviour > Transforms > [deselect] "Scale stroke width" 
+  - Not sure which of these controls scroll bars, but look at terminal scroll bar
+  Linux Mint > `atom /usr/share/themes/Mint-X/gtk-2.0/gtkrc` > `GtkScrollbar::slider-width =`
+  Linux Mint > `atom ~/.config/gtk-3.0/gtk.css` > append:
+
+        .scrollbar {
+        -GtkScrollbar-has-backward-stepper: true;
+        -GtkScrollbar-has-forward-stepper: true;
+        -GtkRange-slider-width: 15;
+        -GtkRange-stepper-size: 8;
+        }
+        .scrollbar.vertical slider,scrollbar.vertical slider {min-width: 15px;}
+
+
+## Install Uncommon Tools
+
+- `if [ ! -d $STORE/opt ]; then mkdir $STORE/opt; fi`
+- Install PyMol: `sudo apt-get install pymol`
+- Install Phenix from download.
+
+      tar xvf phenix-installer-<version>-<platform>.tar
+      cd phenix-installer-<version>-<platform>
+      sudo ./install --prefix=$STORE/opt/
+
+- Install CCP4 from download.
+
+      tar -xf <sys>_ccp4-<ver>-setup.tar.gz 
+      ./ccp4-7.1-setup
+      
+  - **Caution:** Install to $STORE/opt/ in GUI installer
+
+- Install [XDS](https://strucbio.biologie.uni-konstanz.de/xdswiki/index.php/Installation)
+  - Install [XDS](https://xds.mr.mpg.de/html_doc/downloading.html)
+
+        # XDS
+        cd $STORE/opt
+        curl -s -f https://xds.mr.mpg.de/XDS-INTEL64_Linux_x86_64.tar.gz -o xds.tar.gz
+        tar -xzf xds.tar.gz
+        rm xds.tar.gz
+        mv XDS* xds
+
+  - Install [XDS Accessories](https://strucbio.biologie.uni-konstanz.de/pub/linux_bin/)
+
+        cd $STORE/opt/xds
+        # xdsgui
+        curl -s -f https://strucbio.biologie.uni-konstanz.de/pub/linux_bin/xdsgui -o xdsgui
+        chmod a+x xdsgui
+        # generate_XDS.INP
+        curl -s -f https://strucbio.biologie.uni-konstanz.de/pub/linux_bin/generate_XDS.INP -o generate_XDS.INP
+        chmod a+x generate_XDS.INP
+        # spot2pdb
+        curl -s -f https://strucbio.biologie.uni-konstanz.de/pub/linux_bin/spot2pdb -o spot2pdb
+        chmod a+x spot2pdb
+        # xscale_isocluster
+        curl -s -f https://strucbio.biologie.uni-konstanz.de/pub/linux_bin/xscale_isocluster -o xscale_isocluster
+        chmod a+x xscale_isocluster
+        # xdscc12
+        curl -s -f https://strucbio.biologie.uni-konstanz.de/pub/linux_bin/xdscc12 -o xdscc12
+        chmod a+x xdscc12
+        # xdsstat
+        curl -s -f https://strucbio.biologie.uni-konstanz.de/pub/linux_bin/xdsstat -o xdsstat
+        chmod a+x xdsstat
+        # XDS-viewer
+        curl -s -f https://strucbio.biologie.uni-konstanz.de/pub/linux_bin/XDS-viewer -o XDS-viewer
+        chmod a+x XDS-viewer
+        ln -s XDS-viewer xdsviewer
+        ln -s XDS-viewer xds-viewer
+        # checkcentering
+        curl -s -f https://strucbio.biologie.uni-konstanz.de/pub/linux_bin/checkcentering -o checkcentering
+        chmod a+x checkcentering
+        
+- Create Protein Environment
+  - Install [PyRosetta](https://www.pyrosetta.org/downloads)
+
+      pyenv virtualenv 3.9.7 protein_env
+      pyenv local protein_env
+      # https://www.pyrosetta.org/downloads
+      tar -jxf PyRosetta-<version>.tar.bz2
+      cd setup && python setup.py install 
+      import pyrosetta; pyrosetta.init()
+      # May want to remove local environment file
+      
