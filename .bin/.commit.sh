@@ -1,7 +1,6 @@
 #!/bin/bash
 # Temporary Protein-Related Files
 find . -name "*.pdb1"      -type f -delete
-find . -name "*.cif"       -type f -delete
 # Temporary Code-Related Files
 find . -name "*.pyc"       -type f -delete
 # Cache Directories

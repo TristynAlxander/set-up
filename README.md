@@ -55,7 +55,12 @@ Preferably a separate hard-drive.
       # Make Mount point
       sudo mkdir /media/username/drivename
 
-    - Use `atom /etc/fstab` to add `UUID=MY-UUID-HERE /media/username/drivename auto nosuid,nodev,nofail,x-gvfs-show 0 0`
+    - Use `atom /etc/fstab`
+      - For Internal Hard Drives add `UUID=MY-UUID-HERE /media/username/drivename auto nosuid,nodev,nofail,x-gvfs-show 0 0`
+      - For Internal (Samba) Networks 
+        - Install `apt install cifs-utils` 
+        - Get ip address `nmblookup -S WORKGROUP` 
+        - Add to fstab `//192.168.0.??/backup/ /media/username/drivename cifs uid=0,credentials=/.creds 0 0`
     - Test if you did it right `sudo mount -a` - ???
     - You may have to restart here. Unclear it just started working.
 
@@ -82,8 +87,10 @@ Re-Strart your Computer.
 
        # Compile and Install Python, this may take a while. Use your version.
        pyenv install #3.9.7
+       pyenv global 3.9.7
 
-Note: Use `pyenv virtualenv <python_version> <environment_name>` to create new environments.
+Note: Use `pyenv virtualenv <python_version> <environment_name>` to create new environments and `pyenv local environment_name` to set in a location.
+Note: You probably want to `pip install pytest` first thing.
 
 ## Set-Up Git
 
@@ -100,6 +107,7 @@ Note: Use `pyenv virtualenv <python_version> <environment_name>` to create new e
   - Use in `$STORE/repos` use `git clone URL` with URL as:
     - `https://Username`:`Password`@`github.com/Username/myRepo.git`
     - `https://Username`:`Personal_Access_Token`@`github.com/Username/myRepo.git`
+    - Note: Personal_Access_Token can be found in configs
 
 - Creating a Respository
   - Create a Github Repo [link](https://docs.github.com/en/get-started/quickstart/create-a-repo)
@@ -157,7 +165,7 @@ Note: Use `pyenv virtualenv <python_version> <environment_name>` to create new e
     sudo apt install inkscape
     sudo apt install texlive-full
     sudo apt install pdf2svg
-
+    
 ### Semi-Common Preferences
   
   inkscape > Edit > Preferences > Behaviour > Transforms > [deselect] "Scale stroke width" 
@@ -175,6 +183,8 @@ Note: Use `pyenv virtualenv <python_version> <environment_name>` to create new e
 
 
 ## Install Uncommon Tools
+
+Note: It may be wise to load all the crystallography environments at once, but I'm not sure yet.
 
 - `if [ ! -d $STORE/opt ]; then mkdir $STORE/opt; fi`
 - Install PyMol: `sudo apt-get install pymol`
