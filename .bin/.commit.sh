@@ -1,4 +1,7 @@
 #!/bin/bash
+# To-Do: Check USB Sticks
+# To-Do: What about non-directory commits? 
+sudo echo "..."
 # Temporary Protein-Related Files
 find . -name "*.pdb1"      -type f -delete
 # Temporary Code-Related Files
@@ -17,9 +20,12 @@ find . -name "*.temp"      -type f -delete
 find . -name "*_temp"      -type f -delete
 # Create .gitignore
 cp $PREF_BIN/.gitignore .gitignore
+# Ignore Symlinks
+find . -type l >> .gitignore
 # Git
 git add -A
 git commit -m "$(date +%Y_%m_%d_%H_%M_%S)"
 git push origin
+#if [ -d "/media/tristin/backup/repos/" ]; then sudo git push backup; fi
 # Delete .gitignore
 rm .gitignore

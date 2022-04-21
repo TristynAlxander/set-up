@@ -1,8 +1,10 @@
 # Linux
+# 
 
 alias hl="source $PREF_BIN/.hardlink.sh"
-alias commit="source $PREF_BIN/.commit.sh"
+alias commit="sudo $PREF_BIN/.commit.sh"
 alias tex2svg="source $PREF_BIN/.tex2svg.sh"
+#to-do alias tex2pdf="source $PREF_BIN/.tex2svg.sh" # Double run for bibliographies and images, also run Q quiet, also delete all the garbage, also create and remove link to bibliographies
 alias sl="ls -la"
 alias ls="ls -la"
 alias LS="ls -la"
@@ -11,6 +13,7 @@ alias LS="ls -la"
 alias ccp4_env='export PATH=$STORE/opt/ccp4/ccp4-7.1/bin:$PATH; source ccp4.setup-sh'
 alias phenix_env='source $STORE/opt/phenix-1.19.2-4158/phenix_env.sh'
 alias xds_env='export PATH=$STORE/opt/xds:$PATH; export KMP_STACKSIZE=8m'
+alias pymol="pyenv activate protein_env; export PATH=$STORE/opt/pymol/bin:$PATH; pymol"
 
 # Make Check
 export ALIAS_CHECK=1
