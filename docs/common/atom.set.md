@@ -37,3 +37,10 @@
                 }
             }
           }
+  
+  
+  - `spell-check` 
+    - Known Words > "complexing, transmembrane, dimerization, mispairing, misfolding, histocompatibility, proteolyzed, surveilling, kinases, cytosolic, immunoreceptor, tyrosine, tyrosines, phosphorylated, phosphorylates, calcineurin, signalosome, adaptor, stimulatory, costimulatory, epitope, epitopes, linkers, phosphatase, phosphatases, actin, cytoskeleton, dimeric, dimerized, microcluster, allosteric, allostery, cooperativity, analyte, ligand, deconvoluting, sensorgram, sensorgrams, modularity, unstrained, rigidifying, conformational, directionality, disulfide, heterodimer, heterodimers, heterodimerize, heterodimerizes, homodimer, ectodomain, ectodomains, proline, prolines, microclusters, convolute, heterodimeric"
+    - text.tex.latex, source.python
+    - Sometimes this module breaks. Disable it, Restart, Enable it, Restart
+  

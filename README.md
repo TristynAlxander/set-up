@@ -22,6 +22,7 @@ Instructions and files for my preferred linux set-up.
   - Learn how to manipulate your Update/Back-Up/Snapshot settings.
     - Note: Computers with near little space may not want back-ups/snapshots.
   - Note: Do not continue if you cannot resolve the hardware issues.
+  - Probably also want to type in notification to search bar and disable them
 - Install on Computer
   - Either Partition for Dual Boot or Wipe your computer.
     - Obviously you're gonna lose data if you're wiping your computer, so be careful.  
@@ -90,6 +91,7 @@ Re-Strart your Computer.
        pyenv install #3.9.7
        pyenv global 3.9.7
 
+Note: `pyenv activate my_python_env` to activate environment.
 Note: Use `pyenv virtualenv <python_version> <environment_name>` to create new environments and `pyenv local environment_name` to set in a location.
 Note: You probably want to `pip install pytest` first thing.
 Note: Use `python --version` and `pip freeze > requirements.txt` to export, then remake with the version and reinstall with `pip install -r requirements.txt`
@@ -191,6 +193,7 @@ Note: Delete by going to `$PYENV_ROOT/versions` and using `rm -rf` (for virtuale
     sudo apt install ffmpeg
     
 ### Semi-Common Preferences
+  
   
   inkscape > Edit > Preferences > Behaviour > Transforms > [deselect] "Scale stroke width" 
   
