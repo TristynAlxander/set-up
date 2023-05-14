@@ -2,9 +2,14 @@
 
     # Link Repo Aliases and Environment Variables to Standard Location
     #rm ~/.environment, ~/.alias
-    export STORE="/media/tristin/DATA"
-    ln -s $STORE/repos/1_uploads/set-up/.environment ~/.environment
-    ln -s $STORE/repos/1_uploads/set-up/.alias ~/.alias
+    
+    # Note: This must use full path not ~
+    export UPLOADS="/home/tristin/Uploads"
+    
+    chmod 777 $UPLOADS/set-up/.environment
+    chmod 777 $UPLOADS/set-up/.alias
+    sudo ln -sf $UPLOADS/set-up/.environment ~/.environment
+    sudo ln -sf $UPLOADS/set-up/.alias ~/.alias
     
     # Add Check for Aliases and Environment Variables to BashRC
     echo "if [ -t 0 ] && [ -t 1 ]; then"                          >> ~/.bashrc

@@ -1,25 +1,34 @@
 # Atom Text Editor Settings
 
-    sudo apt install atom
+Atom has been abandoned, but can still be downloaded. Instructions may need to be modified.
+If atom is no longer working, try pulsar or community atom.
 
+atom-amd64.tar.gz from the Atom releases page: https://github.com/atom/atom/releases/latest
+Download the deb file.
+Note: the Deb file adds the start up script, which is why it's preferred.
 
-  - Disable snippets in `language-python`
+atom $(which atom)
+Comment-Out nemo_action Block
+
+  - Install Packages (Atom: apm or Pulsar: ppm)
+    - `apm install duplicate-line-or-selection`
+    - `apm install highlight-selected`
+    - `apm install language-latex`
+    - Check if `markdown-preview` is already installed. if not `apm install markdown-preview`
+  - disable `whitespace` package
   - Disable `autocomplete-snippets` package
+  - Disable snippets in `language-python` package
   - set default tab size in `language-python` (and global)
   - Preferences > Editor > Automatic Soft Tabs > Uncheck
-  - disable `whitespace` package
   - Disable Line Wrapping
     - Preferences > Editor >  Max Screen Line Length > Add a zero or more if needed
     - Preferences > Editor > Soft Wrap > Unclick
     - Preferences > Packages > language-gfm > Soft Wrap > Unclick
     - Preferences > Packages > language-latex > latex Grammar > Soft Wrap > Unclick
-  - `line-ending-selector` > Default Line Ending > LF 
+  - `line-ending-selector` > Default Line Ending > LF
   - `bracket-matcher` > uncheck Autocomplete Brackets
   - `bracket-matcher` > uncheck Wrap Selections In Brackets
-  - `apm install duplicate-line-or-selection`
-  - `apm install highlight-selected`
-  - `apm install language-latex`
-  - Check if `markdown-preview` is already installed. if not `apm install markdown-preview`
+  
   - Preferences > Packages > `Spell Check` > Grammar > append `, text.tex.latex` > Restart program
   - append duplicate key to `~/.atom/keymap.cson`
         'atom-workspace atom-text-editor:not([mini])':
