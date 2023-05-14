@@ -1,6 +1,26 @@
+# PyEnv-VirtualEnv Environment Manager
+
+While `pyenv` is effective for managing pure python environments it does not work with `conda`. 
+While I am not partial to anaconda, it is a common dependency that I cannot always work around. 
+As such, I must (unfortunately) recommend using `conda` instead. 
+
 # Install Python via PyEnv.
 
 Start by checking that `$PYENV_ROOT` is set correctly wherever you set-up your environment (e.g. look in `~/.environ`).
+
+```
+# Python Environment Variables
+export PYENV_ROOT="$OPT/.pyenv_root"
+export PATH="$PYENV_ROOT/bin:$PATH"
+export PATH="$PYENV_ROOT/shims:$PATH"
+
+# Add Auto Completion to Python Environment
+if [ -d $PYENV_ROOT ]; then
+  eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
+fi
+```
+
 Assuming you have your bash environment set up correctly, I roughly follow [these instructions](https://realpython.com/intro-to-pyenv/#installing-pyenv).
 
        sudo apt-get install -y make build-essential libssl-dev zlib1g-dev \
@@ -15,9 +35,17 @@ Re-Strart your Computer.
        pyenv install #3.9.7
        pyenv global 3.9.7
 
-# Creating An Environment
+# Uninstall PyEnv
 
-**Creating Environment:** `pyenv virtualenv <python_version> <environment_name>` and `pyenv local environment_name` to set in a location.
+rm -rf $PYENV_ROOT
+
+
+# Creating a PyEnv Environment.
+
+
+
+**Creating Environment:** `pyenv virtualenv <python_version> <environment_name>` and `pyenv local environment_name` to set in a location. e.g. `pyenv virtualenv 3.9.7 temp`
+
 **Common Installs:**
 
     pip install pytest
@@ -31,27 +59,6 @@ Re-Strart your Computer.
 **Export Environment:**     `python --version` and `pip freeze > requirements.txt`
 **Import Environment:**     `pyenv install XXXXXX` `pip install -r requirements.txt`
 
-## Standard Environments
-
-git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git
-pyenv install 3.10.6
-pyenv virtualenv 3.10.6 stable_diffusion
-pyenv local stable_diffusion
-...
-
-maybe 
-bash <(wget -qO- https://raw.githubusercontent.com/AUTOMATIC1111/stable-diffusion-webui/master/webui.sh)
-https://github.com/AUTOMATIC1111/stable-diffusion-webui
-https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Dependencies
-https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Install-and-Run-on-NVidia-GPUs
-
-
-
-# Python Testing
 
 pytest
 coverage
-
-Arrange, Act, Assert. Phases of a test
-
-

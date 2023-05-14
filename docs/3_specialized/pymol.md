@@ -1,39 +1,64 @@
 # PyMol
 
-Create Environment
+Create Environment (python 3.6+)
 
-    pyenv virtualenv 3.9.7 protein_env
-    pyenv activate protein_env
-    pyenv local protein_env
+    pyenv install 3.9.7
+    pyenv virtualenv 3.9.7 pymol
+    pyenv activate pymol
+    pyenv local pymol
+
+## Installation
 
 Instructions: [Pymol](https://github.com/schrodinger/pymol-open-source/blob/master/INSTALL) ^^[1](https://pymolwiki.org/index.php/Linux_Install)
-    
-    apt install git build-essential libglew-dev libpng-dev libfreetype6-dev libxml2-dev libmsgpack-dev libglm-dev libnetcdf-dev
-    pyenv activate protein_env
-    pip install PyQt5
-    if [ ! -d $STORE/opt ]; then mkdir $STORE/opt; fi
-    cd $STORE/opt
+
+PYTHONPATH=/media/tristin/DATA/opt/pymol-open-source/lib/python/pymol/
+PYTHONPATH=/media/tristin/DATA/opt/pymol-open-source/lib/python/
+$PYMOL_PATH
+**Set-Up Optional Software Location (opt):**
+
+    if [ ! -d $OPT ]; then mkdir $OPT; fi; cd $OPT
     git clone https://github.com/schrodinger/pymol-open-source.git
     git clone https://github.com/rcsb/mmtf-cpp.git
     mv mmtf-cpp/include/mmtf* pymol-open-source/include/
-    cd pymol-open-source
-    prefix=$STORE/opt/pymol
-    python setup.py build install --home=$prefix
+    mv pymol-open-source pymol; rm -r mmtf-cpp/
+
+Technically one doesn't have to leave the source files on the computer. 
+If one installs pymol to a home location (see below) outside of the download location, then the source files can be removed after installation. 
+I do not recommend this. It'd require downloading pymol each time it's installed in a different environment.
+
+**Installation:**
+
+Activate your Environment.
+
+    # Prerequisites
+    apt install git build-essential libglew-dev libpng-dev libfreetype6-dev libxml2-dev libmsgpack-dev libglm-dev libnetcdf-dev
+    pip install PyQt5
     
-    # Note there is an alias that matches up with all this
-    rm -r $STORE/opt/mmtf-cpp/ $STORE/opt/pymol-open-source/
+    # Install Program
+    cd $OPT/pymol
+    python setup.py build install --home=$OPT/temp
     
+    # Move to Library
+    mv $OPT/temp/lib/python/* $(( python -c 'import site; print(site.getsitepackages()[0])' ) >&1 )
     
-**Hook for Environment:**
+    # Add to Bin
+    if [ ! -d ~/bin ]; then mkdir ~/bin; fi;
+    echo '#!/bin/sh' > ~/bin/pymol
+    echo exec \"/media/tristin/DATA/opt/.pyenv_root/versions/pymol/bin/python\" \"$(( python -c "import site; print(site.getsitepackages()[0])" ) >&1)/pymol/__init__.py\" \"\$@\" >> ~/bin/pymol
+    
+    # Clean-Up
+    rm -r $OPT/temp
+    rm -r $OPT/pymol/build
 
-Unfortunately, `pyenv` doesn't have hooks for activate/deactivate, so we can't hook in our environment variables.
-If `pyenv` gets hooks for activate/deactivate later we'll be doing something like this:
+**Old Solutions:**
 
-    mkdir $PYENV_ROOT/pyenv.d/activate
-    touch $PYENV_ROOT/pyenv.d/activate/pymol
-    echo "after_virtualenv 'if [ \$VIRTUALENV_NAME == "protein_env" ]; then export PATH=\$STORE/opt/pymol/bin:\$PATH; fi'" >> $PYENV_ROOT/pyenv.d/activate/pymol
-
-**Instead:** Just use an alias in .alias
-
-    alias pymol="pyenv activate protein_env; export PATH=$STORE/opt/pymol/bin:$PATH; pymol"
-
+    # Move or Link Library to Python Library
+    
+    # Solution 1: Link via Python Path Variable
+    #export PYTHONPATH="/media/tristin/DATA/opt/temp/lib/python:$PYTHONPATH"
+    
+    # Solution 2: Link via Python Path file
+    # echo "$OPT/temp/lib/python" >> $PYENV_ROOT/versions/pymol/lib/python3.9/site-packages/pymol.pth
+    
+    # Solution 3: AutoLink via Python Path file
+    # echo "$OPT/temp/lib/python" >> $(( python -c 'import site; print(site.getsitepackages()[0])' ) >&1 )/pymol.pth

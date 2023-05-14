@@ -1,22 +1,22 @@
 # Default Environment Set-Up
 
     # Link Repo Aliases and Environment Variables to Standard Location
-    #rm ~/.environ, ~/.alias
+    #rm ~/.environment, ~/.alias
     export STORE="/media/tristin/DATA"
-    ln -s $STORE/repos/1_uploads/set-up/.environ ~/.environ
+    ln -s $STORE/repos/1_uploads/set-up/.environment ~/.environment
     ln -s $STORE/repos/1_uploads/set-up/.alias ~/.alias
     
     # Add Check for Aliases and Environment Variables to BashRC
-    echo "if [ -t 0 ] && [ -t 1 ]; then"                      >> ~/.bashrc
-    echo "  if ! [ \$ENV_CHECK ]; then source ~/.environ; fi" >> ~/.bashrc
-    echo "  if ! [ \$ALIAS_CHECK ]; then source ~/.alias; fi" >> ~/.bashrc
-    echo "fi"                                                 >> ~/.bashrc
+    echo "if [ -t 0 ] && [ -t 1 ]; then"                          >> ~/.bashrc
+    echo "  if ! [ \$ENV_CHECK ]; then source ~/.environment; fi" >> ~/.bashrc
+    echo "  if ! [ \$ALIAS_CHECK ]; then source ~/.alias; fi"     >> ~/.bashrc
+    echo "fi"                                                     >> ~/.bashrc
     
     # Add Check for Aliases and Environment Variables to Profile
-    echo "if [ -t 0 ] && [ -t 1 ]; then"                      >> ~/.profile
-    echo "  if ! [ \$ENV_CHECK ]; then source ~/.environ; fi" >> ~/.profile
-    echo "  if ! [ \$ALIAS_CHECK ]; then source ~/.alias; fi" >> ~/.profile
-    echo "fi"                                                 >> ~/.profile
+    echo "if [ -t 0 ] && [ -t 1 ]; then"                          >> ~/.profile
+    echo "  if ! [ \$ENV_CHECK ]; then source ~/.environment; fi" >> ~/.profile
+    echo "  if ! [ \$ALIAS_CHECK ]; then source ~/.alias; fi"     >> ~/.profile
+    echo "fi"                                                     >> ~/.profile
 
 Restart Computer.
 

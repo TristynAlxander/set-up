@@ -19,6 +19,7 @@
     - `git config --global --add safe.directory $STORE/repos/myRepo`
       - This is very picky about exactly how this is written, and I can't figure out what's wrong.
       - Seems like it only works if I copy/paste 
+      git config --global --add safe.directory $STORE/repos/1_uploads/junkyard
 
 ## Create Respository
 
