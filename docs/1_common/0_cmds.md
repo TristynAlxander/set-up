@@ -4,7 +4,7 @@
     #rm ~/.environment, ~/.alias
     
     # Note: This must use full path not ~
-    export UPLOADS="/home/tristin/Uploads"
+    export UPLOADS="/home/tristin/uploads"
     
     chmod 777 $UPLOADS/set-up/.environment
     chmod 777 $UPLOADS/set-up/.alias
@@ -33,6 +33,11 @@ Restart Computer.
 
 # Preferences
 
+- Clean up bash
+  - open file `/etc/login.defs`  remove `:/usr/local/games:/usr/games`
+  - open file `/etc/environment` remove `:/usr/games:/usr/local/games:/snap/bin`
+  - `sudo rm -rf /usr/local/games/`
+  - `sudo rm -rf /usr/games/`
 
 - Not sure which of these controls scroll bars, but look at terminal scroll bar
 

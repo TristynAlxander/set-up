@@ -6,7 +6,7 @@ As such, I must (unfortunately) recommend using `conda` instead.
 
 # Install Python via PyEnv.
 
-Start by checking that `$PYENV_ROOT` is set correctly wherever you set-up your environment (e.g. look in `~/.environ`).
+Start by checking that `$PYENV_ROOT` is set correctly wherever you set-up your environment (e.g. look in `~/.environment`).
 
 ```
 # Python Environment Variables
@@ -25,7 +25,10 @@ Assuming you have your bash environment set up correctly, I roughly follow [thes
 
        sudo apt-get install -y make build-essential libssl-dev zlib1g-dev \
        libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev \
-       libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl
+       libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev openssl libssl-dev 
+       
+       # Note: The Above was modified due to an error.
+       # python-openssl -> openssl libssl-dev 
 
        curl https://pyenv.run | bash
 

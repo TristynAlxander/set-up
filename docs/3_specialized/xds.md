@@ -3,7 +3,7 @@ Install [XDS](https://strucbio.biologie.uni-konstanz.de/xdswiki/index.php/Instal
   - Install [XDS](https://xds.mr.mpg.de/html_doc/downloading.html)
 
         # XDS
-        cd $STORE/opt
+        cd $OPT
         curl -s -f https://xds.mr.mpg.de/1XDS-INTEL64_Linux_x86_64.tar.gz -o xds.tar.gz
         tar -xzf xds.tar.gz
         rm xds.tar.gz
@@ -11,7 +11,7 @@ Install [XDS](https://strucbio.biologie.uni-konstanz.de/xdswiki/index.php/Instal
 
   - Install [XDS Accessories](https://strucbio.biologie.uni-konstanz.de/pub/linux_bin/)
 
-        cd $STORE/opt/xds
+        cd $OPT/xds
         # xdsgui
         curl -s -f https://strucbio.biologie.uni-konstanz.de/pub/linux_bin/xdsgui -o xdsgui
         chmod a+x xdsgui
