@@ -1,0 +1,152 @@
+
+Common Arguments & Inputs
+-c:a copy       Copies input codex
+
+# Complex Filters
+semicolon separates commands
+colon separates arguments
+
+
+# Alpha to Color
+  - split image
+  - Draw Box 
+  - - size of image: thickness (t = fill)
+  - - replace alpha 1 = yes, 0 = no
+  - - color (c=blue)
+  - Overlay bg fg
+
+ffmpeg -i in.png       -filter_complex "[0]split=2[bg][fg] ; [bg]drawbox=c=white@1:replace=1:t=fill[bg] ; [bg][fg]overlay=format=auto" -c:a copy out.png
+for filename in *; do ffmpeg -i $filename -filter_complex "[0]split=2[bg][fg] ; [bg]drawbox=c=white@1:replace=1:t=fill[bg] ; [bg][fg]overlay=format=auto" -c:a copy $(basename "$filename" .png)_bg.png; done
+
+
+# Covert to grayscale
+ffmpeg -i input -vf format=gray output
+ffmpeg -i input.png -filter_complex "[0]colorchannelmixer=rr=0.299:rg=0.587:rb=0.114:gr=0.299:gg=0.587:gb=0.114:br=0.299:bg=0.587:bb=0.114" temp_1.png
+
+# White to Alpha
+ffmpeg -i input.jpg -vf colorkey=white:0.3:0.0 out.png
+ffmpeg -i temp_1.png -filter_complex "[0]colorkey=white:0.3:0.0" temp_2.png
+
+# No Contrast
+ffmpeg -hide_banner -loglevel error -y  -i temp_2.png -filter_complex "[0]eq=brightness=0:saturation=0:contrast=0[a];[0]alphaextract[b];[a][b]alphamerge" temp_3.png 
+
+# To Color
+REDD=90/255
+GREN=90/255
+BLUE=30/255
+ffmpeg -hide_banner -loglevel error -y -i temp_3.png -filter_complex "colorchannelmixer=$REDD:$GREN:$BLUE:$REDD:$GREN:$BLUE:$REDD:$GREN:$BLUE" output.png
+
+
+
+
+# Image to Single Color
+ffmpeg -hide_banner -loglevel error -y  -i input -filter_complex 
+"[1]eq=brightness=0:saturation=0:contrast=0[a];[1]alphaextract[b];[a][b]alphamerge[c];[c]negate=negate_alpha=1[d];
+ [0]eq=brightness=0:saturation=0:contrast=0[z];[0]alphaextract[y];[z][y]alphamerge[x];[x]negate=negate_alpha=1[w];
+ [d]geq=lum='p(X,Y)':a='if(lte(alpha(X,Y),254),0,255)'[e];
+ [e]alphaextract[f];[w]alphaextract[v];[v][f]alphamerge" output.png
+
+
+# Conevrsions
+for filename in *; do pdf2svg $filename $filename.svg ; done; mkdir pdf; mkdir svg; mv *.svg svg/; mv *.pdf pdf/
+for filename in *; do inkscape --export-area-page --export-type="png" $filename ; done; mkdir pngs; mv *.png pngs/
+
+
+
+
+# Outline of Surface
+ffmpeg_filter_complex = "[1]eq=brightness=0:saturation=0:contrast=0[a];[1]alphaextract[b];[a][b]alphamerge[c];[c]negate=negate_alpha=1[d];[0]eq=brightness=0:saturation=0:contrast=0[z];[0]alphaextract[y];[z][y]alphamerge[x];[x]negate=negate_alpha=1[w];[d]geq=lum='p(X,Y)':a='if(lte(alpha(X,Y),254),0,255)'[e];[e]alphaextract[f];[w]alphaextract[v];[v][f]alphamerge"
+ffmpeg_cmd = f"ffmpeg -hide_banner -loglevel error -y -i {img_path}_mso.png -i {img_path}_ms.png -filter_complex \"{ffmpeg_filter_complex}\" {img_path}_mo.png"
+os.system(ffmpeg_cmd)
+
+#ffmpeg_filter_complex = "[1]eq=brightness=0:saturation=0:contrast=20[a];[1]alphaextract[b];[a][b]alphamerge"
+#[1]eq=brightness=0:saturation=0:contrast=0[a];[1]alphaextract[b];[a][b]alphamerge[c];[c]negate=negate_alpha=1[d];[0]eq=brightness=0:saturation=0:contrast=0[z];[0]alphaextract[y];[z][y]alphamerge[x];[x]negate=negate_alpha=1[w];[d]geq=lum='p(X,Y)':a='if(lte(alpha(X,Y),254),0,255)'[e];[e]alphaextract[f];[w]alphaextract[v];[v][f]alphamerge"
+#ffmpeg_cmd = f"ffmpeg -hide_banner -loglevel error -y -i {img_path}_mo0.png -i {img_path}_mso.png -filter_complex \"{ffmpeg_filter_complex}\" {img_path}_mo.png"
+#os.system(ffmpeg_cmd)
+
+
+# This gives inverted alpha mask: alpha on bg
+#-filter_complex "[1]eq=brightness=0:saturation=0:contrast=0[a];[1]alphaextract[b];[a][b]alphamerge"  images/into/0_mo.png
+# This gives correct alpha mask: alpha on density
+#-filter_complex "[1]eq=brightness=0:saturation=0:contrast=0[a];[1]alphaextract[b];[a][b]alphamerge[c];[c]negate=negate_alpha=1"  images/into/0_mo.png
+# Correct Alpha Mask Binary
+#-filter_complex "[1]eq=brightness=0:saturation=0:contrast=0[a];[1]alphaextract[b];[a][b]alphamerge[c];[c]negate=negate_alpha=1[d];[d]geq=lum='p(X,Y)':a='if(lte(alpha(X,Y),254),0,255)'"  images/into/0_mo.png
+# Applied, but binary filter 
+#-filter_complex "[1]eq=brightness=0:saturation=0:contrast=0[a];[1]alphaextract[b];[a][b]alphamerge[c];[c]negate=negate_alpha=1[d];[d]geq=lum='p(X,Y)':a='if(lte(alpha(X,Y),254),0,255)'[e];[e]alphaextract[f];[0][f]alphamerge"  images/into/0_mo.png
+# To-DO use split
+#-filter_complex "[1]eq=brightness=0:saturation=0:contrast=0[a];[1]alphaextract[b];[a][b]alphamerge[c];[c]negate=negate_alpha=1[d];[0]eq=brightness=0:saturation=0:contrast=0[z];[0]alphaextract[y];[z][y]alphamerge[x];[x]negate=negate_alpha=1[w];[d]geq=lum='p(X,Y)':a='if(lte(alpha(X,Y),254),0,255)'[e];[e]alphaextract[f];[w]alphaextract[v];[v][f]alphamerge"
+#-filter_complex "
+
+os.system(f'ffmpeg -hide_banner -loglevel error -y -i {img_path}_mo.png -i {img_path}_ms.png -i {img_path}_mo2.png -filter_complex "[0][1]overlay=0:0[v1];[v1][2]overlay=0:0[v2]" -map "[v2]" {img_path}_m.png')
+
+
+
+# transparency
+ffmpeg -hide_banner -loglevel error -y -i thing.png -filter_complex "[0]lut=a=255*0.5" out.png
+ffmpeg -hide_banner -loglevel error -y -i rotamer_rotations_ol.png -filter_complex "[0]lut=a=255*0.333" out.png
+
+# Overlay images
+ffmpeg -hide_banner -loglevel error -y -i bottom.png -i top.png -filter_complex "[0:v][1:v] overlay=0:0" overlay.png
+
+ffmpeg -hide_banner -loglevel error -y -i 3_plot_potentials/two_forms/-196.5_-262_mass.png -i 1_raw_plots/actA_ratios.png -filter_complex "[0:v][1:v] overlay=0:0" overlay.png
+
+
+
+
+for filename in 2_pngs/three_forms/*.png; do
+  ffmpeg -hide_banner -loglevel error -y -i $filename -i bmp9_ratios.png -filter_complex "[0:v][1:v] overlay=0:0" 4_bmp9_overlay/$(basename "$filename" .png).png
+done
+for filename in 2_pngs/three_forms/*.png; do
+  ffmpeg -hide_banner -loglevel error -y -i $filename -i bmp10_ratios.png -filter_complex "[0:v][1:v] overlay=0:0" 5_bmp10_overlay/$(basename "$filename" .png).png
+done
+for filename in 2_pngs/two_forms/*.png; do
+  ffmpeg -hide_banner -loglevel error -y -i $filename -i actA_ratios.png -filter_complex "[0:v][1:v] overlay=0:0" 7_actA_overlay/$(basename "$filename" .png).png
+done
+
+ffmpeg  -framerate 1 -pattern_type glob -i '4_bmp9_overlay/*.png' -c:v mpeg4 bmp9_overlay.mp4
+ffmpeg  -framerate 1 -pattern_type glob -i '5_bmp10_overlay/*.png' -c:v mpeg4 bmp10_overlay.mp4
+ffmpeg  -framerate 1 -pattern_type glob -i '7_actA_overlay/*.png' -c:v mpeg4 actA_overlay2.mp4
+
+
+
+
+
+
+# Pattern Type 
+
+
+
+
+
+# pad images
+ffmpeg -r 1 -s 2657x3248 -pattern_type glob 
+
+ -c:v libx264 -vf "pad=ceil(iw/2)*2:ceil(ih/2)*2" -pix_fmt yuv420p out.mp4
+
+
+
+ffmpeg -hide_banner -loglevel error -y -f lavfi -i color=c=white:s=1000x750:r=24 -framerate 50 -start_number 0 -i images/%d.png movie.mp4
+
+
+8192 5514
+
+
+# Make Video
+# Simple Make Video Common Formats
+ffmpeg -pattern_type glob -i '*_bg.png' -c:v mpeg4 out.mp4
+ffmpeg -pattern_type glob -i 'image_*.png' -c:v mpeg4 -vtag xvid out.avi
+
+
+# Rate 
+ffmpeg  -framerate 1 -pattern_type glob -i '*_bg.png' -c:v mpeg4 out.mp4
+ffmpeg  -r 4         -pattern_type glob -i 'pngs/image_*.png' -c:v mpeg4 out.mp4
+
+
+
+# Make Video
+os.system("ffmpeg -hide_banner -loglevel error -y -framerate 50 -start_number 0 -i images/%d.png -vcodec ffvhuff movie.avi")
+# Reverse Video
+os.system("ffmpeg -hide_banner -loglevel error -y -i movie.avi -vf reverse -vcodec ffvhuff reversed.avi")
+# Concat Videos
+os.system('ffmpeg -hide_banner -loglevel error -y -i movie.avi -i reversed.avi -filter_complex "[0:v][1:v] concat=n=2:v=1 [v]" -map "[v]"  -vcodec ffvhuff loop.avi')
+

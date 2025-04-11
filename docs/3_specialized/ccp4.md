@@ -1,10 +1,20 @@
 #CCP4
 
-    tar -xf <sys>_ccp4-<ver>-setup.tar.gz 
+Download
+
+    tar -xf <sys>_ccp4-<ver>-setup.tar.gz
+    mv ccp4_<ver> $OPT
+    cd $OPT/ccp4_<ver>
+    
+    # This Part is inconsistent
+    ./BINARY.setup
+    # Or 
     ./ccp4-7.1-setup
+    
 
-**Caution:** Install to $STORE/opt/ in GUI installer
+**Caution:** Install to $OPT/ in GUI installer
 **Caution:** Need to Activate environment.
-
-    alias ccp4_env='export PATH=$STORE/opt/ccp4/ccp4-7.1/bin:$PATH; source ccp4.setup-sh'
+    
+    # Adjust in Alias File
+    alias ccp4_env='export PATH=$OPT/ccp4-<ver>/bin:$PATH; source ccp4.setup-sh'
 

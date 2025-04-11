@@ -1,25 +1,16 @@
 # Adjust this as appropriate.
 # Note: This must use full path not ~
 export UPLOADS="/home/tristin/uploads"
+export DOWNLOADS="/home/tristin/downloads"
 export OPT="/opt"
 
 export PREF_BIN="$UPLOADS/set-up/.bin"
 export PATH="$PREF_BIN:$PATH"
 if [ -d "$HOME/.bin" ] ; then export PATH="$HOME/.bin:$PATH"; fi
+if [ -d "$HOME/bin" ] ; then export PATH="$HOME/bin:$PATH"; fi
 
 # Note: \[\e[1;32m\] changes color from then on, not in enclosed. Same for \[\e[0m\] and \[\e[1;34m\]
 export PS1='\[\e[1;32m\]$(whoami | cut -c-1)@$(hostname | cut -c-6)\[\e[0m\]:\[\e[1;34m\]\W\[\e[0m\]\$ '
-
-# Python Environment Variables
-export PYENV_ROOT="$OPT/.pyenv_root"
-export PATH="$PYENV_ROOT/bin:$PATH"
-export PATH="$PYENV_ROOT/shims:$PATH"
-
-# Add Auto Completion to Python Environment
-if [ -d $PYENV_ROOT ]; then
-  eval "$(pyenv init -)"
-  eval "$(pyenv virtualenv-init -)"
-fi
 
 # Make Check
 export ENV_CHECK=1

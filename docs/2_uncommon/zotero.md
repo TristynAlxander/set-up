@@ -9,3 +9,11 @@
 
 Edit > Preferences > Advanced > Files and Folders > Data Directory Location > Custom > Show hidden folders > ~/.zotero/data
 
+
+In LibreOffice
+Tools > Options > LibreOffice > User Data 
+
+Insert > Fields > More Fields > Variable Tab > Type: Number Range > Select: Figure > Format: Arabic.
+
+
+
